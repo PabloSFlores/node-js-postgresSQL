@@ -37,7 +37,7 @@ const saveEmployee = async (req, res = Response) => {
 
 const updateEmployee = async (req, res = Response) => {
     try {
-        const id = req.params.ids
+        const id = parseInt(req.params.id)
         const { name, surname, lastname, email } = req.body
         const response = await pool.query("UPDATE employees SET name = $2, surname = $3, lastname = $4, email = $5 WHERE id = $1;", [id, name, surname, lastname, email])
         // console.log(response)
@@ -51,7 +51,7 @@ const updateEmployee = async (req, res = Response) => {
 
 const deleteEmployee = async (req, res = Response) => {
     try {
-        const id = req.params.id
+        const id = parseInt(req.params.id)
         const response = await pool.query("DELETE FROM employees WHERE id = $1", [id])
         // console.log(response)
         if (response.rowCount == 0) return res.status(404).json({ message: "Employee not found" })
